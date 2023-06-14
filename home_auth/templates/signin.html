@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} Signin {% endblock %}
+
+{% block content%}
+	
+
+	
+    <main class="container">
+    	<div class="row">
+      
+            <div class="col-md-6 offset-md-4 mt-3 mb-5">
+            	<form method="POST" class="card card-body">
+                {% csrf_token %}
+                <h1 class="text-center">Signin</h1>
+               
+               {{form.as_table}}
+
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Signin</button>
+                </div>
+            </form>
+
+            </div>
+        
+    </div>
+    </main>
+
+
+
+{% endblock %}

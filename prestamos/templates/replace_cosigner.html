@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %} Sing co-signer {% endblock %}
+
+
+{% block content %}
+    <main class="container">
+    	<div class="row">
+      
+            <div class="col-md-6 offset-md-4 mt-3">
+            	<form method="POST" class="card card-body">
+                {% csrf_token %}
+                <h1 class="text-center mb-4">Replace cosigner</h1>
+               	
+
+               {{form.as_p}}
+            
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Create and change</button>
+                </div>
+            </form>
+
+             <div class="mt-2">
+                	<p class="text-center"><strong>Or</strong></p>
+                </div>
+
+         	  <div class="col-md-13 mt-3">
+
+                	<form method="POST" action="{% url 'replace_for_old_cosigner' c_id %}" class="card card-body">
+                		 {% csrf_token %}
+                		<div class="d-grid gap-2">
+                			<select name="cosigner_select" required>
+                    		<option value="">-------</option>
+                    		{% for cosigner in cosigners%}
+
+                    		<option value="{{cosigner.id}}">{{cosigner.name}}</option>
+
+                    		{% endfor %}
+                		    </select>
+                		</div>
+
+                		<div class="d-grid gap-2 mt-2">
+                			<button type="submit" class="btn btn-secondary">Change cosigner</button>
+                		</div>
+
+                		
+
+                	</form>
+                    
+                    	
+                </div>
+            	
+          
+
+            </div>
+        
+    </div>
+    </main>
+{% endblock %}
+
+

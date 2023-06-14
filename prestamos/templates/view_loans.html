@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} Your Loans {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 mt-5">
+                <h1>Your Loans</h1>
+                {% for loan in loans %}
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ loan.Modality }}</h5>
+                            <p class="card-text">Loan Value: {{ loan.value }}</p>
+                            <p class="card-text">Cosigner: {{ loan.co_signer.name }}</p>
+                            <p class="card-text">Start: {{loan.start_date}}</p>
+                            <p class="card-text">Term in months: {{loan.term_months}}</p>
+                            <p class="card-text">Monthly fee: <strong>{{loan.monthly_fee}}</strong></p>
+                            <p class="card-text">
+                                <a href="{% url 'replace_cosigner' loan.co_signer.id %}">Replace cosigner for this loan</a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

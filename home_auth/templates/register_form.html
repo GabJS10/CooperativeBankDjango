@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    
+
+    <main class="container">
+    	<div class="row">
+      
+            <div class="col-md-6 offset-md-4 mt-3">
+            	<form method="POST" class="card card-body">
+                {% csrf_token %}
+                <h1 class="text-center">Register</h1>
+               
+               {{form.as_table}}
+
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+
+            </div>
+        
+    </div>
+    </main>
+{% endblock %}

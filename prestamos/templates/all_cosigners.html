@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %} All cosigners {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 mt-5">
+                <h1>Cosigners</h1>
+                {% for cosigner in cosigners %}
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ cosigner.name }}</h5>
+                            <p class="card-text">DNI: {{ cosigner.dni }}</p>
+                            <p class="card-text">From: {{ cosigner.from_city }}</p>
+                            <p class="card-text">Phone: {{cosigner.phone}}</p>
+                            <p class="card-text">Address: {{cosigner.address}}</p>
+                            <p class="card-text">Email: {{cosigner.email}}</p>
+                            <p class="card-text">
+                                <a href="{% url 'loans_cosigner' cosigner.id %}">Loans</a>
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">Cooperative bank</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+
+                        {% if not request.session.is_member %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'createMember' %}">Become a member</a>
+                            </li>
+                        {% endif %}
+
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Regístrese</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signin' %}">Sign In</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <div class="list-group">
+                        <a href="{% url 'home' %}" class="list-group-item list-group-item-action">Home</a>
+
+                    {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="list-group-item list-group-item-action">Logout</a>
+
+                        {% if request.session.is_member %}
+                                <a href="{% url 'make_loan' %}" class="list-group-item list-group-item-action">¡Request your loan!</a>
+                                <a href="{% url 'create_cosigner' %}" class="list-group-item list-group-item-action">New cosigner</a>
+                                <a href="{% url 'view_loans' %}" class="list-group-item list-group-item-action">Your loans</a> 
+                                <a href="{% url 'all_cosigners' %}" class="list-group-item list-group-item-action">Cosigners</a>
+                        {% else %}
+                                <a href="{% url 'createMember' %}" class="list-group-item list-group-item-action">Become a member</a>
+                        {% endif %}
+
+                    {% else %}
+                            <a href="{% url 'register' %}" class="list-group-item list-group-item-action">Regístrese</a>
+                            <a href="{% url 'signin' %}" class="list-group-item list-group-item-action">Sign In</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <footer>
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-lg-4">
+                    <h5>Contacto</h5>
+                    <p>Email: jgabis65@gmail.com</p>
+                    <p>Teléfono: +57 3242992274</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Dirección</h5>
+                    <p>123 Calle Principal</p>
+                    <p>Riohacha, Colombia</p>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Redes Sociales</h5>
+                    <p>Síguenos en:</p>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#">Facebook<i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#">Instagram<i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
