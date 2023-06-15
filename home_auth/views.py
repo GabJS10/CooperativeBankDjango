@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import registerForm
 from .models import Articles
 from socios.views import Members
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
 	articles = Articles.objects.all()
@@ -17,6 +18,8 @@ def home(request):
 	print(request.session.get('is_member'))		
 	return render(request,'home.html',{'articles':articles})
 
+
+@login_required
 def log_out(request):
 	logout(request)
 	return redirect('home')
@@ -36,7 +39,7 @@ def signin(request):
 
 
 			if user is None:
-				mensajes.error(request,'El usuario no existe')
+				messages.error(request,'El usuario no existe')
 			else:
 				login(request,user)
 				return redirect('home')	

@@ -2,8 +2,10 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from .models import Modality, Loans
 from socios.models import Co_signer, Members
 from .forms import loansForm, cosigners_form
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def make_loan(request):
 
 	cosigners = Co_signer.objects.filter(members__user=request.user)
@@ -32,6 +34,7 @@ def make_loan(request):
 		mensaje= 'Necesitas haber registrado al menos un codeudor para hacer el prestamo'
 		return render(request,'co_signer.html',{'form':form,'mensaje':mensaje})			
 
+@login_required
 def create_cosigner(request):
 
 	if request.method== 'POST':
@@ -58,6 +61,7 @@ def create_cosigner(request):
 	form_cosigner = cosigners_form()
 	return render(request,'co_signer.html',{'form':form_cosigner})
 
+@login_required
 def all_loans(request):
 
 	m = Members.objects.get(user=request.user)
@@ -66,6 +70,7 @@ def all_loans(request):
 
 	return render(request,'view_loans.html',{'loans':loans})
 
+@login_required
 def replace_cosigner(request,cosigner_id):
 	if request.method == 'GET':
 		form = cosigners_form()
@@ -100,6 +105,7 @@ def replace_cosigner(request,cosigner_id):
 
 	return render(request,'replace_cosigner.html',{'form':form})
 
+@login_required
 def replace_for_old_cosigner(request,cosigner_id):
 	if request.method=='POST':
 		c_select = int(request.POST['cosigner_select'])
@@ -117,11 +123,13 @@ def replace_for_old_cosigner(request,cosigner_id):
 				loan.save()
 		return redirect('view_loans')	
 
+@login_required
 def all_cosigners(request):
 	c = Co_signer.objects.filter(members__user=request.user)
 
 	return render(request,'all_cosigners.html',{'cosigners':c})
 
+@login_required
 def loans_cosigner(request,cosigner_id):
 	loans = Loans.objects.filter(co_signer__id=cosigner_id).order_by('-start_date')
 
